@@ -1,0 +1,21 @@
+<h1>Photos</h1>
+<% if params[:user_id].nil? %>
+  <%= form_with(url: "/", method: "get") do |form| %>
+    <%= form.label :user_id, "ID: " %>
+    <%= form.text_field :user_id, placeholder: "User Id", required: true %>
+  <% end %>
+<% else %>
+    <% if params[:user_id].empty? %>
+      <p>No id has been provided</p>
+    <% else %>
+      <p>Searching for photos from the account with the following ID: <%= params[:user_id] %></p>
+      <%= form_with(url: "/", method: "get") do |form| %>
+       <%= form.label :user_id, "ID: " %>
+       <%= form.text_field :user_id, placeholder: "User Id", required: true %>
+     <% end %>
+
+      <% @photos.each do |photo| %>
+        <img src="<%= Flickr.url_n(photo) %>"/>
+      <% end %>
+  <% end %>
+<% end %>
